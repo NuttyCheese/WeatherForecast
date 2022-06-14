@@ -29,18 +29,16 @@ class NetworkManager {
     
     private func performRequest(withURLString urlString: String) {
         guard let url = URL(string: urlString) else { return }
-        let session = URLSession(configuration: .default)
-        let task = session.dataTask(with: url) { data, response, error in
+        URLSession.shared.dataTask(with: url) { data, response, error in
             if let data = data {
                 if let currentWeather = self.parseJSON(withData: data) {
                     self.onCompletion?(currentWeather)
                 }
             }
-        }
-        task.resume()
+        }.resume()
     }
     
-    private func parseJSON(withData data: Data) -> CurrentWeather? {
+    func parseJSON(withData data: Data) -> CurrentWeather? {
         let decoder = JSONDecoder()
         do {
             let currentWeatherData = try decoder.decode(CurrnetWeatherData.self, from: data)
