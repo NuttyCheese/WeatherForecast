@@ -8,6 +8,10 @@
 import Foundation
 import CoreLocation
 
+enum Key: String {
+    case apiKey = "c17f1037d81dac146ef74377d3afe8c7"
+}
+
 class NetworkManager {
     enum RequestType {
         case cityType(city: String)
@@ -20,8 +24,8 @@ class NetworkManager {
         var urlString = ""
         
         switch requestType {
-        case .cityType(let city): urlString = "https://api.openweathermap.org/data/2.5/weather?q=\(city)&appid=\(apiKey)&units=metric"
-        case .coordinate(let latitude, let longitude): urlString = "https://api.openweathermap.org/data/2.5/weather?lat=\(latitude)&lon=\(longitude)&appid=\(apiKey)&units=metric"
+        case .cityType(let city): urlString = "https://api.openweathermap.org/data/2.5/weather?q=\(city)&appid=\(Key.apiKey.rawValue)&units=metric"
+        case .coordinate(let latitude, let longitude): urlString = "https://api.openweathermap.org/data/2.5/weather?lat=\(latitude)&lon=\(longitude)&appid=\(Key.apiKey.rawValue)&units=metric"
         }
         
         performRequest(withURLString: urlString)
